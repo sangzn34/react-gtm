@@ -1,12 +1,13 @@
 import Snippets from './Snippets'
+import { DataLayerArgs, SnippetsTag, TagManagerArgs } from './types'
 
 const TagManager = {
-  dataScript: function (dataLayer) {
+  dataScript: function (dataLayer: string) {
     const script = document.createElement('script')
     script.innerHTML = dataLayer
     return script
   },
-  gtm: function (args) {
+  gtm: function (args: SnippetsTag) {
     const snippets = Snippets.tags(args)
 
     const noScript = () => {
@@ -29,7 +30,7 @@ const TagManager = {
       dataScript
     }
   },
-  initialize: function ({ gtmId, events = {}, dataLayer, dataLayerName = 'dataLayer', auth = '', preview = '' }) {
+  initialize: function ({ gtmId, events = {}, dataLayer, dataLayerName = 'dataLayer', auth = '', preview = '' }: TagManagerArgs) {
     const gtm = this.gtm({
       id: gtmId,
       events: events,
@@ -42,12 +43,14 @@ const TagManager = {
     document.head.insertBefore(gtm.script(), document.head.childNodes[0])
     document.body.insertBefore(gtm.noScript(), document.body.childNodes[0])
   },
-  dataLayer: function ({dataLayer, dataLayerName = 'dataLayer'}) {
-    if (window[dataLayerName]) return window[dataLayerName].push(dataLayer)
+  dataLayer: function ({dataLayer, dataLayerName = 'dataLayer'}: DataLayerArgs) {
+    const newWindow = window as { [key: string]: any }
+    
+    if (newWindow[dataLayerName]) return newWindow[dataLayerName].push(dataLayer)
     const snippets = Snippets.dataLayer(dataLayer, dataLayerName)
     const dataScript = this.dataScript(snippets)
     document.head.insertBefore(dataScript, document.head.childNodes[0])
   }
 }
 
-module.exports = TagManager
+export default TagManager

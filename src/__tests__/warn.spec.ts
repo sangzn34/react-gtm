@@ -5,6 +5,6 @@ describe('warn()', function () {
   it('should append [react-gtm] to warning messages', () => {
     sinon.stub(console, 'warn')
     warn('foo')
-    console.warn.toHaveBeenCalled
+    jest.spyOn(global.console, 'warn')
   })
 })

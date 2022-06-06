@@ -1,4 +1,4 @@
-const warn = (s) => {
+const warn = (s: string) => {
   console.warn('[react-gtm]', s);
 }
 

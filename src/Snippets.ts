@@ -1,9 +1,10 @@
+import { DataLayerArgs, SnippetsTag } from './types'
 import warn from './utils/warn'
 
 // https://developers.google.com/tag-manager/quickstart
 
 const Snippets = {
-  tags: function ({ id, events, dataLayer, dataLayerName, preview, auth }) {
+  tags: function ({ id, events, dataLayer, dataLayerName, preview, auth }: SnippetsTag) {
     const gtm_auth = `&gtm_auth=${auth}`
     const gtm_preview = `&gtm_preview=${preview}`
 
@@ -29,11 +30,11 @@ const Snippets = {
       dataLayerVar
     }
   },
-  dataLayer: function (dataLayer, dataLayerName) {
+  dataLayer: function (dataLayer: DataLayerArgs | undefined, dataLayerName: string | undefined) {
     return `
       window.${dataLayerName} = window.${dataLayerName} || [];
       window.${dataLayerName}.push(${JSON.stringify(dataLayer)})`
   }
 }  
 
-module.exports = Snippets
+export default Snippets

@@ -10,7 +10,7 @@ describe('Snippets', () => {
   })
   
   it('should use the `id` for the iframe', () => {
-    expect(snippets.iframe).toContain(`id=${args.id}`, 1)
+    expect(snippets.iframe).toContain(`id=${args.id}`)
   })
   
   it('should use the `gtm_auth` and `gtm_preview` for the iframe', () => {
@@ -19,8 +19,8 @@ describe('Snippets', () => {
       preview: 'env-2'
     })
     snippets = Snippets.tags(args)
-    expect(snippets.iframe).toContain(`gtm_auth=${args.auth}`, 1)
-    expect(snippets.iframe).toContain(`gtm_preview=${args.preview}`, 1)
+    expect(snippets.iframe).toContain(`gtm_auth=${args.auth}`)
+    expect(snippets.iframe).toContain(`gtm_preview=${args.preview}`)
   })
 
   it('should use the `dataLayer` for the script', () => {
